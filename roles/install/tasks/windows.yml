@@ -1,0 +1,7 @@
+---
+- name: Create temporary step CLI download directory (Windows)
+  ansible.windows.win_tempfile:
+    state: directory
+    prefix: step-cli-download-
+  register: step_cli_tmpdir
+  when: ansible_system == "Windows"

@@ -1,0 +1,10 @@
+---
+- hosts: all
+  become: True
+
+  collections:
+    - smallstep.sigstore
+    - smallstep.cli
+
+  roles:
+    - role: smallstep.cli.install
