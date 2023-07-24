@@ -25,7 +25,7 @@ We have some basic support for using this collection on Windows but it is untest
 ### Role variables
 
 ```yaml
-step_cli_version: # (Optional) Format: v0.2.24.4. It is empty by default. If it is left empty, the role will query GitHub's API to find the latest release.
+step_cli_version: # (Optional) Format: v0.2.24.4. Default: latest version
 step_cli_install_path: # (Optional) Default: /usr/local/bin.
 step_cli_download_url: # (Optional) Default: https://dl.smallstep.com/gh-release/cli/gh-release-header
 step_cli_verify_signature: # (Optional) Default: True
