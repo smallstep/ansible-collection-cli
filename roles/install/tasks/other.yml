@@ -1,0 +1,58 @@
+---
+# Tasks for non Red Hat or Debian based operating systems
+
+- name: Create temporary step CLI download directory
+  ansible.builtin.tempfile:
+    state: directory
+    prefix: step-cli-download-
+  register: step_cli_tmpdir
+  when: not ansible_system == "Windows"
+
+- name: Include Windows tasks
+  ansible.builtin.include_tasks: windows.yaml
+  when: ansible_system == "Windows"
+
+- name: Set step-cli file name fact
+  ansible.builtin.set_fact:
+    step_cli_filename: "step_{{ ansible_system | lower }}_{{ smallstep_cli_version | replace('v','') }}_{{ step_cli_arch }}.{{ step_cli_archive_format }}"
+
+- name: Download step CLI archive
+  ansible.builtin.get_url:
+    url: "{{ smallstep_cli_download_url }}/{{ smallstep_cli_version }}/{{ step_cli_filename }}"
+    dest: "{{ step_cli_tmpdir.path }}"
+    checksum: sha256:{{ smallstep_cli_download_url }}/{{ smallstep_cli_version }}/checksums.txt
+
+- name: Download step CLI pem and sig files
+  ansible.builtin.get_url:
+    url: "{{ smallstep_cli_download_url }}/{{ smallstep_cli_version }}/{{ item }}"
+    dest: "{{ step_cli_tmpdir.path }}"
+  with_items:
+    - "{{ step_cli_filename }}.pem"
+    - "{{ step_cli_filename }}.sig"
+
+- name: Verify the step-cli archive using Sigstore and fail if it doesn't pass verification
+  ansible.builtin.include_role:
+    name: smallstep.sigstore.verify_artifact
+  vars:
+    verify_artifact_file: "{{ step_cli_tmpdir.path }}/{{ step_cli_filename }}"
+    verify_artifact_certificate: "{{ step_cli_tmpdir.path }}/{{ step_cli_filename }}.pem"
+    verify_artifact_signature: "{{ step_cli_tmpdir.path }}/{{ step_cli_filename }}.sig"
+    verify_artifact_cert_identity: "https://github.com/smallstep/cli/.github/workflows/release.yml@refs/tags/{{ smallstep_cli_version }}"
+    verify_artifact_cert_oidc_issuer: "https://token.actions.githubusercontent.com"
+    verify_artifact_fail_run: True
+  when: smallstep_cli_verify_signature
+
+- name: Install step CLI binary
+  ansible.builtin.unarchive:
+    src: "{{ step_cli_tmpdir.path }}/{{ step_cli_filename }}"
+    dest: "{{ smallstep_cli_install_path }}"
+    extra_opts:
+      - --strip-components=2
+    remote_src: yes
+  when: not ansible_system == "Windows"
+
+- name: Remove temporary step CLI download directory
+  ansible.builtin.file:
+    path: "{{ step_cli_tmpdir.path }}"
+    state: absent
+  when: step_cli_tmpdir.path is defined

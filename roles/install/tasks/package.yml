@@ -1,0 +1,45 @@
+---
+# Shared tasks
+
+- name: Check for step CLI smallstep_cli_version variable and set it to the latest version if not set
+  block:
+    - name: Check GitHub for the latest release of step CLI
+      become: no
+      delay: 10
+      delegate_to: localhost
+      retries: 5
+      run_once: True
+      ansible.builtin.uri:
+        body_format: json
+        return_content: True
+        url: https://api.github.com/repos/smallstep/cli/releases/latest
+      register: step_cli_github_response
+    - name: Set smallstep_cli_version fact to the latest release
+      ansible.builtin.set_fact:
+        smallstep_cli_version: "{{ step_cli_github_response.json.tag_name }}"
+  when: not smallstep_cli_version
+
+- name: Set step_cli_arch and step_cli_archive_format facts
+  ansible.builtin.set_fact:
+    step_cli_arch: "{{ step_cli_arch_map[ansible_architecture] }}"
+    step_cli_archive_format: "{{ step_cli_archive_map[ansible_system | lower] }}"
+
+- name: Set step_cli_package_format fact to RPM
+  ansible.builtin.set_fact:
+    step_cli_package_format: "rpm"
+  when: ansible_os_family == "RedHat"
+
+- name: Set step_cli_package_format fact to Deb
+  ansible.builtin.set_fact:
+    step_cli_package_format: "deb"
+  when: ansible_os_family == "Debian"
+
+- name: Set smallstep_cli_download_url fact to the default download URL if smallstep_cli_download_url is not set
+  ansible.builtin.set_fact:
+    smallstep_cli_download_url: "https://dl.smallstep.com/gh-release/cli/gh-release-header/{{ smallstep_cli_version }}/step-cli_{{ step_cli_arch }}.{{ step_cli_package_format }}"
+  when: not smallstep_cli_download_url and (ansible_os_family == "RedHat" or ansible_os_family == "Debian")
+
+- name: Set smallstep_cli_download_url fact to the default download URL if smallstep_cli_download_url is not set
+  ansible.builtin.set_fact:
+    smallstep_cli_download_url: "https://dl.smallstep.com/gh-release/cli/gh-release-header/"
+  when: not smallstep_cli_download_url and not (ansible_os_family == "RedHat" or ansible_os_family == "Debian")

@@ -25,10 +25,10 @@ We have some basic support for using this collection on Windows but it is untest
 ### Role variables
 
 ```yaml
-step_cli_version: # (Optional) Format: v0.2.24.4. Default: latest version
-step_cli_install_path: # (Optional) Default: /usr/local/bin.
-step_cli_download_url: # (Optional) Default: https://dl.smallstep.com/gh-release/cli/gh-release-header
-step_cli_verify_signature: # (Optional) Default: True
+smallstep_cli_version: # (Optional) Format: v0.2.24.4. Default: latest version
+smallstep_cli_install_path: # (Optional) Default: /usr/local/bin.
+smallstep_cli_download_url: # (Optional) Default: https://dl.smallstep.com/gh-release/cli/gh-release-header
+smallstep_cli_verify_signature: # (Optional) Default: True
 ```
 
 ### Example Playbook
@@ -51,10 +51,10 @@ step_cli_verify_signature: # (Optional) Default: True
   roles:
     - role: smallstep.cli.install
       vars:
-        # step_cli_version: v0.24.4
-        # step_cli_install_path: /usr/local/bin
-        # step_cli_download_url: https://dl.smallstep.com/gh-release/cli/gh-release-header
-        # step_cli_verify_signature: True
+        smallstep_cli_version: v0.24.4
+        smallstep_cli_install_path: /usr/local/bin
+        smallstep_cli_download_url: https://dl.smallstep.com/gh-release/cli/gh-release-header
+        smallstep_cli_verify_signature: True
 ```
 
 ## Playbook: smallstep.cli.install_step_cli
@@ -70,7 +70,7 @@ ansible-playbook smallstep.cli.install_step_cli -i ansible_inventory
 ### Install a specific version of step CLI to the path of your choice
 
 ```bash
-ansible-playbook smallstep.cli.install_step_cli -i ansible_inventory -e "step_cli_version=v0.24.4" -e "step_cli_install_path=/usr/bin"
+ansible-playbook smallstep.cli.install_step_cli -i ansible_inventory -e "smallstep_cli_version=v0.24.4" -e "smallstep_cli_install_path=/usr/bin"
 ```
 
 ## Local development

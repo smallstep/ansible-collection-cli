@@ -1,6 +1,7 @@
 ---
 # defaults file for install
-step_cli_version: # Example: v0.24.4. Leave unset for the latest release off of GitHub
-step_cli_install_path: /usr/local/bin
-step_cli_download_url: https://dl.smallstep.com/gh-release/cli/gh-release-header
-step_cli_verify_signature: True
+smallstep_cli_version: # Example: v0.24.4. Leave unset for the latest release off of GitHub
+smallstep_cli_install_path: /usr/local/bin
+smallstep_cli_download_url:
+smallstep_cli_verify_signature: True
+step_cli_package_format:

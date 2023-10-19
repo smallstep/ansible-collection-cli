@@ -23,10 +23,10 @@ We have some basic support for using this role on Windows but it is untested. Us
 ## Role Variables
 
 ```yaml
-step_cli_version: # (Optional) Format: v0.2.24.4. It is empty by default. If it is left empty, the role will query GitHub's API to find the latest release.
-step_cli_install_path: # (Optional) Default: /usr/local/bin.
-step_cli_download_url: # (Optional) Default: https://dl.smallstep.com/gh-release/cli/gh-release-header
-step_cli_verify_signature: # (Optional) Default: True
+smallstep_cli_version: # (Optional) Format: v0.2.24.4. It is empty by default. If it is left empty, the role will query GitHub's API to find the latest release.
+smallstep_cli_install_path: # (Optional) Default: /usr/local/bin.
+smallstep_cli_download_url: # (Optional) Default: https://dl.smallstep.com/gh-release/cli/gh-release-header
+smallstep_cli_verify_signature: # (Optional) Default: True
 ```
 
 ## Example Playbook
@@ -51,16 +51,16 @@ Here's an example playbook for Enterprise Linux based servers. (Fedora, RHEL, Ce
   roles:
     - role: smallstep.cli.install
       vars:
-        # step_cli_version: v0.24.4
-        # step_cli_install_path: /usr/local/bin
-        # step_cli_download_url: https://dl.smallstep.com/gh-release/cli/gh-release-header
-        # step_cli_verify_signature: True
+        # smallstep_cli_version: v0.24.4
+        # smallstep_cli_install_path: /usr/local/bin
+        # smallstep_cli_download_url: https://dl.smallstep.com/gh-release/cli/gh-release-header
+        # smallstep_cli_verify_signature: True
 ```
 
 ## Author Information
 
-Joe Doss @jdoss
-Smallstep Engineering
+* Joe Doss @jdoss
+* Smallstep Engineering
 
 ## License
 

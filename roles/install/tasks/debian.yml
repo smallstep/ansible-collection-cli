@@ -1,0 +1,7 @@
+---
+# Tasks for Debian based distributions
+
+- name: Install the step-cli Deb package
+  ansible.builtin.apt:
+    deb: "{{ smallstep_cli_download_url }}"
+    state: present
