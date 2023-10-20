@@ -24,7 +24,7 @@ jobs:
       - name: Clone Ansible collection dependancy (smallstep.sigstore)
         uses: actions/checkout@v4
         with:
-          repository: ansible-collection-sigstore
+          repository: smallstep/ansible-collection-sigstore
           path: ansible_collections/smallstep/sigstore
 
       - name: Clone Ansible collection dependancy (ansible.windows)
