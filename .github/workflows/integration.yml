@@ -24,13 +24,13 @@ jobs:
       - name: Clone Ansible collection dependancy (smallstep.sigstore)
         uses: actions/checkout@v4
         with:
-          repository: https://github.com/smallstep/ansible-collection-sigstore.git
+          repository: ansible-collection-sigstore
           path: ansible_collections/smallstep/sigstore
 
       - name: Clone Ansible collection dependancy (ansible.windows)
         uses: actions/checkout@v4
         with:
-          repository: https://github.com/ansible-collections/ansible.windows.git
+          repository: ansible-collections/ansible.windows
           path: ansible_collections/ansible/windows
 
       - name: Set up Python 3.x
