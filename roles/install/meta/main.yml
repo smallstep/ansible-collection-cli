@@ -33,7 +33,7 @@ galaxy_info:
     versions:
       - all
 
-  galaxy_tags: [smallstep, step, step-cli, cli, pki, certificate, automation]
+  galaxy_tags: [smallstep, step, cli, pki, certificate, automation]
 
 dependencies: []
 collections:

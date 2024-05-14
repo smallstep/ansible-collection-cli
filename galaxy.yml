@@ -5,13 +5,11 @@ readme: README.md
 authors:
 - Tech Admin <techadmin@smallstep.com>
 description: Installs the smallstep CLI.
-license:
-- Apache-2.0
-license_file: 'LICENSE.md'
+license_file: 'LICENSE'
 tags:
   - smallstep
   - step
-  - step-cli
+  - cli
   - tls
   - mtls
   - pki
